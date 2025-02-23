@@ -8,3 +8,9 @@ def palindrome(word:str) -> bool:
 
 
 print(palindrome("madam"))
+
+
+
+
+def palindrome(word:str) -> bool:
+  return word == word[::-1]
