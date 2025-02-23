@@ -1,15 +1,22 @@
-def palindrome(word:str) -> bool:
-  length = len(word)
-  word = word.lower()
-  for i in range(length // 2):
-    if word[i] != word[length - i - 1]:
-      return False
+def isPalindrome(word:str) -> bool:
+    word = word.lower()
+    wordLength = len(word)
+    
+    for i in range(wordLength // 2):
+        if word[i] != word[wordLength - i - 1]:
+            return False
+    return True
 
-  return True
+print(isPalindrome("madam"))
+print(isPalindrome("ABBA"))
 
 
-print(palindrome("madaM"))
-
-def palindrome(word:str) -> bool:
-  word = word.lower()
-  return word == word[::-1]
+def isPalindromeSimple(word):
+    word = word.lower()
+    return word == word[::-1]
+    
+print(isPalindromeSimple("MADAM"))
+print(isPalindromeSimple("ABBA"))
+print(isPalindromeSimple("KIAN"))
+print(isPalindromeSimple("USM"))
+print(isPalindromeSimple("LENOVO"))

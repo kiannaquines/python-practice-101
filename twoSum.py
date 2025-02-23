@@ -10,7 +10,6 @@ class Solution:
   
     return items
 
-
 sol = Solution()
 result = sol.twoSum([1, 2, 3, 4, 5, 6], 10)
 print(result)
