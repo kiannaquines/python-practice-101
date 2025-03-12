@@ -11,7 +11,7 @@ def bubble_sort_visualization():
     n = len(items)
     for i in range(n - 1):
         for j in range(n - 1 - i):
-            if items[j] > items[j + 1]:  # Swap elements
+            if items[j] > items[j + 1]:
                 items[j], items[j + 1] = items[j + 1], items[j]
             yield items
 
