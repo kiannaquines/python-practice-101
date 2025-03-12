@@ -2,8 +2,7 @@ import random
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
-items = [random.randint(1, 1000) for _ in range(1000)]
-
+items = [random.randint(1, 500) for _ in range(500)]
 def quicksort(arr, low, high):
     if low < high:
         pivot_index = partition(arr, low, high)
