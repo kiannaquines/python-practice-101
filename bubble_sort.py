@@ -2,7 +2,7 @@ import random
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
-items = [random.randint(1, 200) for _ in range(100)]
+items = [random.randint(1, 1000) for _ in range(1000)]
 
 fig, ax = plt.subplots()
 bar_rects = ax.bar(range(len(items)), items, align="edge")
