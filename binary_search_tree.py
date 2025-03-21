@@ -3,8 +3,8 @@ class Node:
         self.value = value
         self.left = None
         self.right = None
-
-class BinaryTree:
+        
+class BinarySearchTree:
     def __init__(self):
         self.root = None
     
@@ -14,8 +14,8 @@ class BinaryTree:
     def _insert(self, current, value):
         if current is None:
             return Node(value)
-        
-        if value == current.value:
+            
+        if current.value == value:
             pass
         
         if value < current.value:
@@ -40,6 +40,7 @@ class BinaryTree:
             return self._search(self.root, value)
     
     def _search(self, current, value):
+        
         if current is None or current.value == value:
             return current
         
@@ -49,70 +50,60 @@ class BinaryTree:
             return self._search(current.right, value)
         
         return current
-    
-    def _min_value_node(self, value):
-        current = value
-        while current.left is not None:
-            current = current.left
         
+    def _min_value_node(self, node):
+        current = node
+        while current and current.left is not None:
+            current = current.left
         return current
+        
     
     def delete(self, value):
         self.root = self._delete(self.root, value)
     
-    def _delete(self, node, value):
-        if node is None:
-            return node
-        
-        if value < node.value:
-            node.left = self._delete(node.left, value)
-        elif value > node.value:
-            node.right = self._delete(node.right, value)
+    def _delete(self, current, value):
+        if current is None:
+            return None
+
+        if value < current.value:
+            current.left = self._delete(current.left, value)
+        elif value > current.value:
+            current.right = self._delete(current.right, value)
         else:
-            
-            if node.left is None or node.right is None:
+            # Case 1: Node has no children (leaf node)
+            if current.left is None and current.right is None:
                 return None
             
-            if node.left is not None:
-                return node.right
-                
-            if node.right is not None:
-                return node.left
-            
-            temp = self._min_value_node(node.right)
-            node.value = temp.value
-            node.right = self._delete(node.right, temp.value)
-            
-        return node
+            # Case 2: Node has only one child
+            if current.left is None:
+                return current.right  # Return the right child
+            elif current.right is None:
+                return current.left  # Return the left child
 
+            # Case 3: Node has two children
+            temp = self._min_value_node(current.right)  # Find the inorder successor
+            current.value = temp.value  # Replace value with inorder successor
+            current.right = self._delete(current.right, temp.value)  # Delete the inorder successor
 
-
+        return current
+    
 if __name__ == "__main__":
-    tree = BinaryTree()
-    tree.insert(12)
-    tree.insert(10)
-    tree.insert(11)
-    tree.insert(9)
-    tree.insert(21)
-    tree.insert(20)
-    tree.insert(30)
-    tree.insert(41)
-    tree.insert(10)
+    tree = BinarySearchTree()
+    tree.insert(4)
+    tree.insert(1)
+    tree.insert(0)
+    tree.insert(5)
+    tree.insert(6)
+    tree.insert(5)
+    tree.insert(7)
     tree.display()
     
-    
-    search_node = 99
-    
-    result = tree.search(search_node)
-    
+    result = tree.search(4)
     if result:
-        print(f"Node {search_node} found")
+        print(f"Found {result.value} in the tree")
     else:
-        print(f"Node {search_node} cannot be found")
-        
-        
-    delete_node = 41
-    result_delete = tree.delete(delete_node)
-
+        print("Cannot be found")
+    
+    node_to_delete = 6
+    tree.delete(node_to_delete)
     tree.display()
-        
