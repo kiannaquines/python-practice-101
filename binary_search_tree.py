@@ -69,18 +69,14 @@ class BinarySearchTree:
             current.left = self._delete(current.left, value)
         elif value > current.value:
             current.right = self._delete(current.right, value)
-        else:
-            # Case 1: Node has no children (leaf node)
-            if current.left is None and current.right is None:
-                return None
-            
-            # Case 2: Node has only one child
+        else:            
+            # Case 1: Node has only one child
             if current.left is None:
                 return current.right  # Return the right child
             elif current.right is None:
                 return current.left  # Return the left child
 
-            # Case 3: Node has two children
+            # Case 2: Node has two children
             temp = self._min_value_node(current.right)  # Find the inorder successor
             current.value = temp.value  # Replace value with inorder successor
             current.right = self._delete(current.right, temp.value)  # Delete the inorder successor
