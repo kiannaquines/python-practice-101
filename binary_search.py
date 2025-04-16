@@ -1,28 +1,27 @@
-import random
+from random import randint, choice
 
-numbers = [random.randint(0, 100) for _ in range(100)]
-numbers = sorted(numbers)
+def binary_search(arr, target):
+    l, r = 0, len(arr) - 1
 
+    while l <= r:
+        m = (l + r) // 2
+        
+        if arr[m] == target:
+            return m
+        elif arr[m] > target:
+            r = m - 1
+        else:
+            l = m + 1
+    
+    return None
 
-def binary_search(numbers,target):
-  left, right = 0, len(numbers) - 1
+grades = set(sorted([randint(75,100) for _ in range(45)]))
+grades = list(grades)
+target = choice(grades)
 
-  while left <= right:
-    mid = (left + right) // 2
+log_search = binary_search(grades,target)
 
-    if numbers[mid] == target:
-      return mid
-    elif numbers[mid] > target:
-      right = mid + 1
-    else:
-      left = mid + 1
-
-  return -1
-
-
-search = binary_search(numbers,89)
-
-if search is not None:
-  print(f"Item found at index {search}")
+if log_search is not None:
+    print(f"Item found at index {log_search}")
 else:
-  print("Item cannot be found")
+    print(f"Item {target} cannot be found")
