@@ -20,6 +20,14 @@ class Stack:
         
         return self.items[-1]
 
+    def reverse(self):
+        self.items = self.items[::-1]
+
+        return self.items
+
+    def clear(self):
+        return self.items.clear()
+
     def __str__(self):
         return f"Stack {self.items}"
 
@@ -42,5 +50,11 @@ if __name__ == "__main__":
     print(size)
 
     stack.pop()
+
+    print(stack)
+
+    print(stack.reverse())
+
+    stack.clear()
 
     print(stack)
