@@ -1,0 +1,39 @@
+from random import randint, choice
+
+class BinarySearch:
+    def __init__(self):
+        self.items = []
+        
+    def _sort(self):
+        return sorted(self.items)
+
+    def search(self, items, target):
+        items = self._sort()
+
+        left, right = 0, len(items) - 1
+
+        while left <= right:
+            middle = (left + right) // 2
+
+            if items[middle] == target:
+                return middle
+            elif items[middle] > target:
+                right = middle - 1
+            else:
+                left = middle + 1
+        
+        return -1
+        
+    
+    def generate_target(self):
+        return choice(self.items)
+    
+    def generate_items(self, n=100):
+        self.items = [randint(0,100) for _ in range(n)]
+
+if __name__ == "__main__":
+    search = BinarySearch()
+    grades = search.generate_items()
+    target = search.generate_target()
+    result = search.search(grades, target)
+    print(result)
