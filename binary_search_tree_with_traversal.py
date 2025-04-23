@@ -4,17 +4,18 @@ class TreeNode(object):
         self.left = left
         self.right = right
 
-class BinarySearchTree:
+class BinarySearchTree(object):
+    
     def __init__(self):
         self.root = None
-        self.result = []
     
     def insert(self, value):
         self.root = self._insert(self.root, value)
     
     def _insert(self, current, value):
         if current is None:
-            return TreeNode(value)
+            return TreeNode(value=value)
+        
         if value < current.value:
             current.left = self._insert(current.left, value)
         elif value > current.value:
@@ -32,12 +33,7 @@ class BinarySearchTree:
             self._display(current.left, level + 1)
     
     def search(self, value):
-        result = self._search(self.root, value)
-
-        if result is not None:
-            print(f'Node {result.value} found in the tree.')
-        else:
-            print('Node cannot be found, please try again.')
+        return self._search(self.root, value)
     
     def _search(self, current, value):
         if current is None or current.value == value:
@@ -48,99 +44,99 @@ class BinarySearchTree:
         elif value > current.value:
             return self._search(current.right, value)
     
-    def _min_value_node(self, right):
-        current = right
+    def _min_value_node(self, node):
+        current = node
         
         while current and current.right is not None:
             current = current.right
         
         return current
-
-    def delete(self, node):
-        self.root = self._delete(self.root, node)
+    
+    def delete(self, value):
+        self.root = self._delete(self.root, value)
     
     def _delete(self, current, value):
         if current is not None:
+            
             if value < current.value:
                 current.left = self._delete(current.left, value)
             elif value > current.value:
                 current.right = self._delete(current.right, value)
             else:
-
+                
                 if current.left is None:
                     return current.right
-
+                
                 if current.right is None:
                     return current.left
-
                 
                 temp = self._min_value_node(current.right)
                 current.value = temp.value
                 current.right = self._delete(current.right, temp.value)
-        
-        return current
+            
+            return current
     
     def inorder(self):
-        result = self.result.copy()
-        def inorder_traversal(node):
-            if node is None:
-                return 
-            
-            inorder_traversal(node.left)
-            result.append(node.value)
-            inorder_traversal(node.right)
-        
-        inorder_traversal(self.root)
-        return result
-    
-    def postorder(self):
-        result = self.result.copy()
-        def postorder_traversal(node):
-            if node is None:
-                return 
-            
-            postorder_traversal(node.left)
-            postorder_traversal(node.right)
-            result.append(node.value)
+        result = []
 
+        def inorderTraversal(node):
+            if node is None:
+                return
+            
+            inorderTraversal(node.left)
+            result.append(node.value)
+            inorderTraversal(node.right)
         
-        postorder_traversal(self.root)
+        inorderTraversal(self.root)
+
         return result
     
     def preorder(self):
-        result = self.result.copy()
+        result = []
 
-        def preorder_traversal(node):
+        def preorderTraversal(node):
             if node is None:
-                return 
+                return
+            
             result.append(node.value)
-            preorder_traversal(node.left)
-            preorder_traversal(node.right)
+            preorderTraversal(node.left)
+            preorderTraversal(node.right)
         
-        preorder_traversal(self.root)
+        preorderTraversal(self.root)
+
+        return result
+    
+    def postorder(self):
+        result = []
+
+        def postorderTraversal(node):
+            if node is None:
+                return
+            
+            postorderTraversal(node.left)
+            postorderTraversal(node.right)
+            result.append(node.value)
+        
+        postorderTraversal(self.root)
+
         return result
 
-
+            
 if __name__ == "__main__":
     tree = BinarySearchTree()
-    tree.insert(3)
-    tree.insert(2)
     tree.insert(1)
-    tree.insert(5)
+    tree.insert(0)
     tree.insert(4)
     tree.insert(6)
-    tree.insert(7)
-    tree.insert(8)
-    tree.delete(7)
-
+    tree.insert(5)
+    tree.delete(4)
     tree.display()
 
-    preorder = tree.preorder()
-    print(f'Pre-order: {preorder}')
+    inorder_traversal = tree.inorder()
+    print(inorder_traversal)
 
-    inorder = tree.inorder()
-    print(f'In-order: {inorder}')
+    preorder_traversal = tree.preorder()
+    print(preorder_traversal)
 
-    postorder = tree.postorder()
-    print(f'Post-order: {postorder}')
-
+    postorder_traversal = tree.postorder()
+    print(postorder_traversal)
