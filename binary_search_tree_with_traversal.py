@@ -133,10 +133,10 @@ if __name__ == "__main__":
     tree.display()
 
     inorder_traversal = tree.inorder()
-    print(inorder_traversal)
+    print("In-order:", inorder_traversal)
 
     preorder_traversal = tree.preorder()
-    print(preorder_traversal)
+    print("Pre-order:",preorder_traversal)
 
     postorder_traversal = tree.postorder()
-    print(postorder_traversal)
+    print("POst-order:", postorder_traversal)
