@@ -114,13 +114,26 @@ class BinaryTree:
     
     def invert(self):
         self._invert(self.root)
-
+    
     def _invert(self, node):
         if node is None:
             return None
+        
         node.left, node.right = self._invert(node.right), self._invert(node.left)
-        return node
 
+        return node
+    
+    def reverseInvert(self):
+        self._reverseInvert(self.root)
+    
+    def _reverseInvert(self, node):
+        if node is None:
+            return None
+        
+        node.left, node.right = self._reverseInvert(node.left), self._reverseInvert(node.right)
+
+        return node
+    
 if __name__ == "__main__":
     tree = BinaryTree()
     tree.insert(2)
@@ -147,4 +160,7 @@ if __name__ == "__main__":
     print(f"Post-Order Traversal: {postOrder}")
 
     tree.invert()
+    tree.display()
+
+    tree.reverseInvert()
     tree.display()
