@@ -1,8 +1,8 @@
-class TreeNode(object):
+class TreeNode:
     def __init__(self, value = 0, left = None, right = None):
         self.value = value
-        self.left = left
         self.right = right
+        self.left = left
 
 class BinaryTree:
     def __init__(self):
@@ -19,19 +19,19 @@ class BinaryTree:
             pass
 
         if value < current.value:
-            current.left = self._insert(current.left,value)
+            current.left = self._insert(current.left, value)
         elif value > current.value:
             current.right = self._insert(current.right, value)
         
         return current
     
     def display(self):
-        return self._display(self.root, 0)
+        self._display(self.root, 0)
     
     def _display(self, current, level):
         if current is not None:
             self._display(current.right, level + 1)
-            print(" " * 4 * level + str(current.value))
+            print(" " * 5 * level + str(current.value))
             self._display(current.left, level + 1)
     
     def search(self, value):
@@ -51,7 +51,7 @@ class BinaryTree:
         while current and current.right is not None:
             current = current.right
         return current
-
+    
     def delete(self, value):
         self.root = self._delete(self.root, value)
     
@@ -62,105 +62,120 @@ class BinaryTree:
             elif value > current.value:
                 current.right = self._delete(current.right, value)
             else:
+
                 if current.left is None:
                     return current.right
-                elif current.right is None:
+                
+                if current.right is None:
                     return current.left
-
+                
                 temp = self._min_value_node(current.right)
                 current.value = temp.value
                 current.right = self._delete(current.right, temp.value)
             
             return current
+    
+    def invertTree(self):
+        return self._invertTree(self.root)
+    
+    def _invertTree(self, current):
+        if current is None:
+            return None
+        
+        current.left, current.right = self._invertTree(current.right), self._invertTree(current.left) 
+        return current
 
-    def inorder(self):
-        result = []
-        def inorderTraversal(current):
-            if current is None:
-                return
+    def reverseTree(self):
+        return self._reverseTree(self.root)
+    
+    def _reverseTree(self, current):
+        if current is None:
+            return None
         
-            inorderTraversal(current.left)
-            result.append(current.value)
-            inorderTraversal(current.right)
-        
-        inorderTraversal(self.root)
-        return result
+        current.left, current.right = self._reverseTree(current.left), self._reverseTree(current.right)
+        return current
     
     def preorder(self):
+        return self._preorder(self.root)
+    
+    def _preorder(self, current):
         result = []
-        def preorderTraversal(current):
-            if current is None:
+        def preOrderTraversal(node):
+            if node is None:
                 return
+            
+            result.append(node.value)
+            preOrderTraversal(node.left)
+            preOrderTraversal(node.right)
         
-            result.append(current.value)
-            preorderTraversal(current.left)
-            preorderTraversal(current.right)
+        preOrderTraversal(current)
+        return result
+
+    def inorder(self):
+        return self._inorder(self.root)
+    
+    def _inorder(self, current):
+        result = []
+        def inorderTraversal(node):
+            if node is None:
+                return
+            inorderTraversal(node.left)
+            result.append(node.value)
+            inorderTraversal(node.right)
         
-        preorderTraversal(self.root)
+        inorderTraversal(current)
+
         return result
     
     def postorder(self):
+        return self._postorder(self.root)
+    
+    def _postorder(self, current):
         result = []
-        def postorderTraversal(current):
-            if current is None:
+        def postorderTraversal(node):
+            if node is None:
                 return
-        
-            postorderTraversal(current.left)
-            postorderTraversal(current.right)
-            result.append(current.value)
-        
-        postorderTraversal(self.root)
+            
+            postorderTraversal(node.left)
+            postorderTraversal(node.right)
+            result.append(node.value)
+
+        postorderTraversal(current)
         return result
-    
-    def invert(self):
-        self._invert(self.root)
-    
-    def _invert(self, node):
-        if node is None:
-            return None
-        
-        node.left, node.right = self._invert(node.right), self._invert(node.left)
 
-        return node
-    
-    def reverseInvert(self):
-        self._reverseInvert(self.root)
-    
-    def _reverseInvert(self, node):
-        if node is None:
-            return None
-        
-        node.left, node.right = self._reverseInvert(node.left), self._reverseInvert(node.right)
-
-        return node
-    
 if __name__ == "__main__":
     tree = BinaryTree()
-    tree.insert(2)
     tree.insert(3)
+    tree.insert(2)
     tree.insert(1)
-    tree.insert(0)
+    tree.insert(1)
+    tree.insert(4)
+    tree.insert(5)
     tree.insert(6)
-    tree.insert(5)
-    tree.insert(5)
+    tree.insert(7)
+    tree.insert(8)
+    tree.delete(6)
+    tree.delete(4)
+    tree.delete(5)
     tree.display()
 
-    if tree.search(2) is not None:
-        print('Node found')
+    if tree.search(10) is not None:
+        print('\nNode found')
     else:
-        print('Node cannot be found')
+        print('\nNode cannot be found')
 
-
-    preOrder = tree.preorder()
-    inOrder = tree.inorder()
-    postOrder = tree.postorder()
-
-    print(f"Pre-Order Traversal: {preOrder}")
-    print(f"In-Order Traversal: {inOrder}")
-    print(f"Post-Order Traversal: {postOrder}")
-
-    tree.invert()
+    print("\nInverse Tree")
+    tree.invertTree()
     tree.display()
 
-    tree.reverseInvert()
+    print("Reverse Tree")
+    tree.reverseTree()
     tree.display()
+
+    print("\nTree Traversal\n")
+    preorderTraversal = tree.preorder()
+    print(f"Pre-Order Traversal: {preorderTraversal}")
+    inorderTraversal = tree.inorder()
+    print(f"In-Order Traversal: {inorderTraversal}")
+    postorderTraversal = tree.postorder()
+    print(f"Post-Order Traversal: {postorderTraversal}")
