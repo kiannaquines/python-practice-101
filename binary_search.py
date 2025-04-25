@@ -1,9 +1,10 @@
+import random
+
 def binary_search(items, target):
     left, right = 0, len(items) - 1
 
     while left <= right:
         middle = (left + right) // 2
-
         if items[middle] == target:
             return middle
         elif items[middle] > target:
@@ -13,13 +14,10 @@ def binary_search(items, target):
     
     return -1
 
-
 if __name__ == "__main__":
-
-    from random import randint, choice
-
-    grades = [randint(75,100) for _ in range(50)]
-    grades = list(set(sorted(grades)))
-
-    search = binary_search(grades, choice(grades))
+    grades = list(set(sorted([random.randint(75,100) for _ in range(50)])))
+    target = random.choice(grades)
+    print(grades)
+    print(target)
+    search = binary_search(grades, target)
     print(search)
