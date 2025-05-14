@@ -172,7 +172,7 @@ if __name__ == "__main__":
     tree.reverseTree()
     tree.display()
 
-    print("\nTree Traversal\n")
+    print("\n\nTree Traversal\n\n")
     preorderTraversal = tree.preorder()
     print(f"Pre-Order Traversal: {preorderTraversal}")
     inorderTraversal = tree.inorder()
